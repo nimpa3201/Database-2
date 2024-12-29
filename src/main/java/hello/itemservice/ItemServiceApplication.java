@@ -31,7 +31,7 @@ public class ItemServiceApplication {
 	}
 
 
-	@Bean
+	/*@Bean
 	@Profile("test")// 실제 데이터베이스를 사용하지 않고, 메모리 내에 데이터베이스를 띄워 테스트
 	public DataSource dataSource(){
 		log.info("메모리 데이터 베이스 초기화");
@@ -42,6 +42,11 @@ public class ItemServiceApplication {
 		dataSource.setPassword("");
 		return dataSource;
 	}
+
+	 */
+
+
+
 
 
 }
