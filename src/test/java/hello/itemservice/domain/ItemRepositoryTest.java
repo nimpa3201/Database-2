@@ -5,19 +5,45 @@ import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
 import hello.itemservice.repository.memory.MemoryItemRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+
+/*
+테스트 중요 원칙
+- 테스트는 다른 테스트와 격리해야한다.
+- 테스트는 반복해서 실행할 수 있어야한다.
+ */
+
+@Transactional // 테스트에서는 스프링은 테스트를 트랜잭션 안에서 실행하고, 테스트가 끝나면 자동으로 롤백시킨다.
 @SpringBootTest
 class ItemRepositoryTest {
 
     @Autowired
     ItemRepository itemRepository;
+
+    /*
+    @Autowired
+    PlatformTransactionManager transactionManager;
+    TransactionStatus status;
+
+
+    @BeforeEach
+    void beforeEach(){
+        //트랜잭션 시작
+       status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+    } */
 
     @AfterEach
     void afterEach() {
@@ -25,8 +51,11 @@ class ItemRepositoryTest {
         if (itemRepository instanceof MemoryItemRepository) {
             ((MemoryItemRepository) itemRepository).clearStore();
         }
+
+        // transactionManager.rollback(status); // 트랜잭션 롤백
     }
 
+    //@Commit  @Transactinal 있음에도 강제로 테스트케이스에서도 커밋 가능함
     @Test
     void save() {
         //given
@@ -90,3 +119,4 @@ class ItemRepositoryTest {
         assertThat(result).containsExactly(items);
     }
 }
+
