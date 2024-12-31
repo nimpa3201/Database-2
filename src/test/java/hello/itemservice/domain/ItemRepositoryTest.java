@@ -70,6 +70,7 @@ class ItemRepositoryTest {
     }
 
     @Test
+    // @Commit update query 확인할 수 있음
     void updateItem() {
         //given
         Item item = new Item("item1", 10000, 10);
