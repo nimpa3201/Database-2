@@ -9,3 +9,16 @@
 
 # generated 폴더와  하위폴더  깃 추적 무시
 src/main/generated/
+
+# Gradle 빌드 관련 파일
+.gradle/
+
+# IntelliJ IDEA 관련 설정
+.idea/
+
+# 빌드 생성물 폴더
+build/
+out/
+
+# 기타 불필요한 파일
+HELP.md
